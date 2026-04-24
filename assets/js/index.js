@@ -1,7 +1,7 @@
 // seleciona todas as imagens e coloca dentro de um 'array'
 const images = document.querySelectorAll(".card-img")
 // seleciona todos os botões e coloca dentro de um 'array'
-const buttons = document.querySelectorAll(".card=btn")
+const buttons = document.querySelectorAll(".card-btn")
 
 // para cara do botão, ele vai adicionar um evento 
 buttons.forEach((btn, index) => {
@@ -15,6 +15,6 @@ buttons.forEach((btn, index) => {
     } else {
         btn.textContent = 'ESCONDER'
     }
-    
+
   })  
 })
