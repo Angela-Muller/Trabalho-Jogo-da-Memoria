@@ -16,5 +16,59 @@ buttons.forEach((btn, index) => {
         btn.textContent = 'ESCONDER'
     }
 
+    
   })  
 })
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".cards");
+  const cartas = Array.from(container.children);
+
+  function embaralhar(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+
+  embaralhar(cartas);
+
+ 
+  container.innerHTML = "";
+
+
+  cartas.forEach(carta => container.appendChild(carta));
+});
+   
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".cards");
+  const botaoReset = document.getElementById("reset");
+
+  function embaralhar(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  function resetarJogo() {
+    const cartas = Array.from(container.children);
+
+    embaralhar(cartas);
+
+    container.innerHTML = "";
+
+    cartas.forEach(carta => {
+      const img = carta.querySelector(".card-img");
+
+      img.classList.add("hide");
+
+      container.appendChild(carta);
+    });
+  }
+
+  botaoReset.addEventListener("click", resetarJogo);
+
+  resetarJogo();
+});
