@@ -3,7 +3,7 @@
     margin: 0;
     box-sizing: border-box;
 }
-body{
+main{
 background: url(../images/herlem.jpg);
 background-repeat: no-repeat;
 background-size: cover;
@@ -65,5 +65,9 @@ img {
     align-items: center;
     justify-content: center;
     text-align: center;
+    background-color: black;
+}
+
+body{
     background-color: black;
 }
