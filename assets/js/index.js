@@ -2,12 +2,15 @@
 const images = document.querySelectorAll(".card-img")
 // seleciona todos os botões e coloca dentro de um 'array'
 const buttons = document.querySelectorAll(".card-btn")
+// seleciona todos os fundos das cartas
+const fundo = document.querySelectorAll(".back")
 
 // para cara do botão, ele vai adicionar um evento 
 buttons.forEach((btn, index) => {
   btn.addEventListener('click', () => {
      // pega a imagem (por índice) e ativa
     images[index].classList.toggle('hide')
+    fundo[index].classList.toggle('hide')
 
     // se o texto é 'esconder', troca para 'mostrar'
     if(btn.textContent === 'ESCONDER') {
@@ -19,12 +22,9 @@ buttons.forEach((btn, index) => {
     
   })  
 })
-
-   /*Executa quando o HTML é carregado*/
+   
 document.addEventListener("DOMContentLoaded", () => {
-  /*pega a div que contem as cartas*/
   const container = document.querySelector(".cards");
-  /*paga o botão do reset*/
   const botaoReset = document.getElementById("reset");
   /*Começa um loop de embaralhar*/
   function embaralhar(array) {
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cartas.forEach(carta => {
       const img = carta.querySelector(".card-img");
 
-      img.classList.add("hide");
+      img.classList.toggle("none");
 
       container.appendChild(carta);
     });
