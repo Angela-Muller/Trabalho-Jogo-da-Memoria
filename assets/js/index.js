@@ -20,34 +20,18 @@ buttons.forEach((btn, index) => {
   })  
 })
 
+   /*Executa quando o HTML é carregado*/
 document.addEventListener("DOMContentLoaded", () => {
+  /*pega a div que contem as cartas*/
   const container = document.querySelector(".cards");
-  const cartas = Array.from(container.children);
-
-  function embaralhar(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
-
-
-  embaralhar(cartas);
-
- 
-  container.innerHTML = "";
-
-
-  cartas.forEach(carta => container.appendChild(carta));
-});
-   
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector(".cards");
+  /*paga o botão do reset*/
   const botaoReset = document.getElementById("reset");
-
+  /*Começa um loop de embaralhar*/
   function embaralhar(array) {
+    /*gera um numero aleatoriamente entre 0 e i*/
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
+      /*Trpca as imagens de lugar*/
       [array[i], array[j]] = [array[j], array[i]];
     }
   }
