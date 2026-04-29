@@ -15,6 +15,14 @@ const pont = document.getElementById("pont")
 
 const tpm = document.getElementById("tpm")
 
+const cartas = [
+  document.getElementById("buzz"),
+  document.getElementById("hulk"),
+  document.getElementById("jail"),
+  document.getElementById("nho"),
+  document.getElementById("rev")
+]
+
 let pontuacao = 0;
 
 let tentativa = 0;
@@ -33,13 +41,11 @@ btnCards.forEach((btn, index) => {
 document.addEventListener("DOMContentLoaded", () => {
 
   /*Começa um loop de embaralhar*/
-  function embaralhar(array) {
-    /*gera um numero aleatoriamente entre 0 e i*/
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      /*Trpca as imagens de lugar*/
-      [array[i], array[j]] = [array[j], array[i]];
-    }
+  function embaralhar() {
+    cartas.forEach(cartas => {
+      cartas.querySelector("img").style.display = "none";
+      cartas.style.backgroudColor = "";
+    })
   }
 
   function resetarJogo() {
