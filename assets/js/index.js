@@ -17,6 +17,10 @@ const tpm = document.getElementById("tpm")
 
 const cartas = Array.from(container.children);
 
+let pontos = 0;
+
+let tentativa = 0;
+
 // para cara do botão, ele vai adicionar um evento 
 btnCards.forEach((btn, index) => {
   btn.addEventListener('click', () => {
