@@ -15,19 +15,7 @@ const pont = document.getElementById("pont")
 
 const tpm = document.getElementById("tpm")
 
-const cartas = [
-  document.getElementById("buzz"),
-  document.getElementById("hulk"),
-  document.getElementById("jail"),
-  document.getElementById("nho"),
-  document.getElementById("rev")
-]
-
-let pontuacao = 0;
-
-let tentativa = 0;
-
-let tempo = 0;
+const cartas = Array.from(container.children);
 
 // para cara do botão, ele vai adicionar um evento 
 btnCards.forEach((btn, index) => {
@@ -37,43 +25,33 @@ btnCards.forEach((btn, index) => {
     fundo[index].classList.toggle('hide')
   })  
 })
-   
-document.addEventListener("DOMContentLoaded", () => {
+
 
   /*Começa um loop de embaralhar*/
-  function embaralhar() {
-    cartas.forEach(cartas => {
-      cartas.querySelector("img").style.display = "none";
-      cartas.style.backgroudColor = "";
-    })
+  function embaralhar(array) {
+    /*gera um numero aleatoriamente entre 0 e i*/
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      /*Trpca as imagens de lugar*/
+      [array[i], array[j]] = [array[j], array[i]];
+    }
   }
 
   function resetarJogo() {
-    const cartas = Array.from(container.children);
-    pontuacao = 0;
-    tempo = 0;
-    tpm.innerHTML = `tempo ${tempo}`
-    pont.innerHTML = `pontuacao ${pontuacao}`
+
     embaralhar(cartas);
 
     container.innerHTML = "";
 
-    cartas.forEach((carta, index) => {
+    cartas.forEach(carta => {
+      const img = carta.querySelector(".card-img");
 
-      images [index].classList.toggle("hide")
-      fundo [index].classList.toggle("hide")
+      img.classList.toggle("none");
 
       container.appendChild(carta);
     });
   }
 
-  function pontuacao_game(){
-    tempo ++;
-    pontuacao +=1
-    tpm.innerHTML = `tempo ${tempo}`
-    pont.innerHTML = `pontuacao ${pontuacao}`
-  }
-
   btnReset.addEventListener("click", resetarJogo);
-  btnstart.addEventListener("click",pontuacao_game)
-});
+
+  resetarJogo();
