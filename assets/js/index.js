@@ -1,57 +1,49 @@
-// seleciona todas as imagens e coloca dentro de um 'array'
-const images = document.querySelectorAll(".card-img")
-// seleciona todos os botões e coloca dentro de um 'array'
-const btnCards = document.querySelectorAll(".cards1")
-// seleciona todos os fundos das cartas e coloca dentro de um `array`
-const fundo = document.querySelectorAll(".back")
-// Seleciona todo o container das cartas
 const container = document.querySelector(".cards");
-// Seleciona todos os botões das cartas
+const btnCards = document.querySelectorAll(".cards1");
 const btnReset = document.getElementById("reset");
-
-const btnstart = document.getElementById("start");
-
-const pont = document.getElementById("pont")
-
-const tpm = document.getElementById("tpm")
 
 const cartas = Array.from(container.children);
 
-// para cara do botão, ele vai adicionar um evento 
-btnCards.forEach((btn, index) => {
-  btn.addEventListener('click', () => {
-     // pega a imagem (por índice) e ativa
-    images[index].classList.toggle('hide')
-    fundo[index].classList.toggle('hide')
-  })  
-})
+
+btnCards.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const img = btn.querySelector(".card-img");
+    const back = btn.querySelector(".back");
+
+    img.classList.remove("hide");
+    back.classList.add("hide");
+  });
+});
 
 
-  /*Começa um loop de embaralhar*/
-  function embaralhar(array) {
-    /*gera um numero aleatoriamente entre 0 e i*/
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      /*Trpca as imagens de lugar*/
-      [array[i], array[j]] = [array[j], array[i]];
-    }
+function embaralhar(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
+}
 
-  function resetarJogo() {
 
-    embaralhar(cartas);
+function resetarJogo() {
 
-    container.innerHTML = "";
+  embaralhar(cartas);
 
-    cartas.forEach(carta => {
-      const img = carta.querySelector(".card-img");
+  container.innerHTML = "";
 
-      img.classList.toggle("none");
+  cartas.forEach(carta => {
+    const img = carta.querySelector(".card-img");
+    const back = carta.querySelector(".back");
 
-      container.appendChild(carta);
-    });
-  }
 
-  btnReset.addEventListener("click", resetarJogo);
+    img.classList.add("hide");
+    back.classList.remove("hide");
 
-  resetarJogo();
+    container.appendChild(carta);
+  });
+}
+
+
+btnReset.addEventListener("click", resetarJogo);
+
+
+resetarJogo();
