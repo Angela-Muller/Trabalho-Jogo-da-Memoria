@@ -4,6 +4,7 @@ const btnReset = document.getElementById("reset");
 
 const cartas = Array.from(container.children);
 
+<<<<<<< HEAD
 
 btnCards.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -14,6 +15,20 @@ btnCards.forEach((btn) => {
     back.classList.add("hide");
   });
 });
+=======
+let pontos = 0;
+
+let tentativa = 0;
+
+// para cara do botão, ele vai adicionar um evento 
+btnCards.forEach((btn, index) => {
+  btn.addEventListener('click', () => {
+     // pega a imagem (por índice) e ativa
+    images[index].classList.toggle('hide')
+    fundo[index].classList.toggle('hide')
+  })  
+})
+>>>>>>> 92fcfbd5cd698db03bd11bd4e986b54444cfadb0
 
 
 function embaralhar(array) {
@@ -38,6 +53,7 @@ function resetarJogo() {
     img.classList.add("hide");
     back.classList.remove("hide");
 
+<<<<<<< HEAD
     container.appendChild(carta);
   });
 }
@@ -47,3 +63,6 @@ btnReset.addEventListener("click", resetarJogo);
 
 
 resetarJogo();
+=======
+  resetarJogo();
+>>>>>>> 92fcfbd5cd698db03bd11bd4e986b54444cfadb0
