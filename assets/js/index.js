@@ -13,6 +13,8 @@ const container = document.querySelector(".cards");
 // botão reset
 const btnReset = document.getElementById("reset");
 
+const btnStart = document.getElementById("tempo")
+
 const pont = document.getElementById("pont");
 
 const cartas = Array.from(container.children);
@@ -63,6 +65,9 @@ btnCards.forEach((btn) => {
     } else {
       setTimeout(() => {
 
+        if(pontos > 0){
+          pontos -=5
+        }
         desvirar(primeiraCarta);
         desvirar(segundaCarta);
 
@@ -122,3 +127,19 @@ btnReset.addEventListener("click", resetarJogo);
 
 // inicia o jogo
 resetarJogo();
+
+let tempo = 0; // Tempo inicial em segundos
+let intervalo;
+const timer = document.getElementById("tempo");
+
+function temporarizador() {
+        clearInterval(intervalo); // evita múltiplos
+
+    intervalo = setInterval(() => {
+        tempo++;
+        timer.innerHTML = `Tempo: ${tempo}`;
+    }, 1000);
+
+}
+
+btnStart.addEventListener("click", temporarizador())
