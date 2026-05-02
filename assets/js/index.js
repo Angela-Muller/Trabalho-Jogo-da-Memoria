@@ -1,73 +1,145 @@
-// seleciona todas as imagens e coloca dentro de um 'array'
-const images = document.querySelectorAll(".card-img")
-// seleciona todos os botões e coloca dentro de um 'array'
-const btnCards = document.querySelectorAll(".cards1")
-// seleciona todos os fundos das cartas e coloca dentro de um `array`
-const fundo = document.querySelectorAll(".back")
-// Seleciona todo o container das cartas
+// seleciona todas as imagens
+const images = document.querySelectorAll(".card-img");
+
+// seleciona todos os botões
+const btnCards = document.querySelectorAll(".cards1");
+
+// seleciona os fundos
+const fundo = document.querySelectorAll(".back");
+
+// container
 const container = document.querySelector(".cards");
-// Seleciona todos os botões das cartas
+
+// botão reset
 const btnReset = document.getElementById("reset");
 
-const btnstart = document.getElementById("start");
+const btnStart = document.getElementById("tempo")
 
-const pont = document.getElementById("pont")
+const pont = document.getElementById("pont");
 
-const tpm = document.getElementById("tpm")
+const cartas = Array.from(container.children);
 
-let pontuacao = 0;
 
-let tentativa = 0;
 
-let tempo = 0;
+let primeiraCarta = null;
+let segundaCarta = null;
+let travar = false;
+let pontos = 0;
 
-// para cara do botão, ele vai adicionar um evento 
-btnCards.forEach((btn, index) => {
-  btn.addEventListener('click', () => {
-     // pega a imagem (por índice) e ativa
-    images[index].classList.toggle('hide')
-    fundo[index].classList.toggle('hide')
-  })  
-})
-   
-document.addEventListener("DOMContentLoaded", () => {
 
-  /*Começa um loop de embaralhar*/
-  function embaralhar(array) {
-    /*gera um numero aleatoriamente entre 0 e i*/
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      /*Trpca as imagens de lugar*/
-      [array[i], array[j]] = [array[j], array[i]];
+btnCards.forEach((btn) => {
+  btn.addEventListener("click", () => {
+
+    if (travar) return;
+
+    const img = btn.querySelector(".card-img");
+    const back = btn.querySelector(".back");
+
+    // evita clicar na mesma carta
+    if (!img.classList.contains("hide")) return;
+
+    // vira carta
+    img.classList.remove("hide");
+    back.classList.add("hide");
+
+    // primeira carta
+    if (!primeiraCarta) {
+      primeiraCarta = btn;
+      return;
     }
-  }
 
-  function resetarJogo() {
-    const cartas = Array.from(container.children);
-    pontuacao = 0;
-    tempo = 0;
-    tpm.innerHTML = `tempo ${tempo}`
-    pont.innerHTML = `pontuacao ${pontuacao}`
-    embaralhar(cartas);
+    // segunda carta
+    segundaCarta = btn;
+    travar = true;
 
-    container.innerHTML = "";
+ 
+    if (primeiraCarta.dataset.card === segundaCarta.dataset.card) {
 
-    cartas.forEach((carta, index) => {
+      pontos += 10;
+      pont.textContent = "Pontuação: " + pontos;
 
-      images [index].classList.toggle("hide")
-      fundo [index].classList.toggle("hide")
+      primeiraCarta = null;
+      segundaCarta = null;
+      travar = false;
 
-      container.appendChild(carta);
-    });
-  }
+    } else {
+      setTimeout(() => {
 
-  function pontuacao_game(){
-    tempo ++;
-    pontuacao +=1
-    tpm.innerHTML = `tempo ${tempo}`
-    pont.innerHTML = `pontuacao ${pontuacao}`
-  }
+        if(pontos > 0){
+          pontos -=5
+        }
+        desvirar(primeiraCarta);
+        desvirar(segundaCarta);
 
-  btnReset.addEventListener("click", resetarJogo);
-  btnstart.addEventListener("click",pontuacao_game)
+        primeiraCarta = null;
+        segundaCarta = null;
+        travar = false;
+
+      }, 800);
+    }
+  });
 });
+
+
+function desvirar(carta) {
+  const img = carta.querySelector(".card-img");
+  const back = carta.querySelector(".back");
+
+  img.classList.add("hide");
+  back.classList.remove("hide");
+}
+
+function embaralhar(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+
+
+function resetarJogo() {
+
+  pontos = 0;
+  pont.textContent = "Pontuação: 0";
+
+  embaralhar(cartas);
+
+  container.innerHTML = "";
+
+  cartas.forEach(carta => {
+    const img = carta.querySelector(".card-img");
+    const back = carta.querySelector(".back");
+
+    img.classList.add("hide");
+    back.classList.remove("hide");
+
+    container.appendChild(carta);
+  });
+
+  primeiraCarta = null;
+  segundaCarta = null;
+  travar = false;
+}
+
+// botão de resetar o jogo
+btnReset.addEventListener("click", resetarJogo);
+
+// inicia o jogo
+resetarJogo();
+
+let tempo = 0; // Tempo inicial em segundos
+let intervalo;
+const timer = document.getElementById("tempo");
+
+function temporarizador() {
+        clearInterval(intervalo); // evita múltiplos
+
+    intervalo = setInterval(() => {
+        tempo++;
+        timer.innerHTML = `Tempo: ${tempo}`;
+    }, 1000);
+
+}
+
+btnStart.addEventListener("click", temporarizador())
